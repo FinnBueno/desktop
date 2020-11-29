@@ -47,7 +47,7 @@ export class WindowControls extends React.Component<{}, IWindowControlState> {
   }
 
   public shouldComponentUpdate(nextProps: {}, nextState: IWindowControlState) {
-    return nextState.windowState !== this.state.windowState
+    return !(nextState.windowState == this.state.windowState)
   }
 
   private onWindowStateChanged = (
