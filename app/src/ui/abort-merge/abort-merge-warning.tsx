@@ -19,7 +19,7 @@ interface IAbortMergeWarningProps {
 export class AbortMergeWarning extends React.Component<
   IAbortMergeWarningProps,
   {}
-> {
+  > {
   /**
    *  Aborts the merge and dismisses the modal
    */
@@ -44,7 +44,7 @@ export class AbortMergeWarning extends React.Component<
   private renderTextContent(ourBranch: string, theirBranch?: string) {
     let firstParagraph
 
-    if (theirBranch !== undefined) {
+    if (!(theirBranch == undefined)) {
       firstParagraph = (
         <p>
           {'Are you sure you want to abort merging '}

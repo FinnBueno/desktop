@@ -16,29 +16,29 @@ if (!args[0]) {
 const commandArg = args[0]
 args = args.slice(1)
 
-// tslint:disable-next-line whitespace
-;(function attemptRun(name: string) {
-  try {
-    if (supportsCommand(name)) {
-      runCommand(name)
-    } else if (name.startsWith('--')) {
-      attemptRun(name.slice(2))
-    } else {
-      try {
-        args.unshift(commandArg)
-        runCommand(defaultCommand)
-      } catch (err) {
-        logError(err)
-        args = []
-        runCommand('help')
+  // tslint:disable-next-line whitespace
+  ; (function attemptRun(name: string) {
+    try {
+      if (supportsCommand(name)) {
+        runCommand(name)
+      } else if (name.startsWith('--')) {
+        attemptRun(name.slice(2))
+      } else {
+        try {
+          args.unshift(commandArg)
+          runCommand(defaultCommand)
+        } catch (err) {
+          logError(err)
+          args = []
+          runCommand('help')
+        }
       }
+    } catch (err) {
+      logError(err)
+      args = [name]
+      runCommand('help')
     }
-  } catch (err) {
-    logError(err)
-    args = [name]
-    runCommand('help')
-  }
-})(commandArg)
+  })(commandArg)
 
 function logError(err: CommandError) {
   console.log(chalk.bgBlack.red('ERR!'), err.message)
@@ -93,7 +93,7 @@ function runCommand(name: string) {
 
       const value = parsedArgs[flag]
       const expectedType = command.options[flag].type
-      if (typeof value !== expectedType) {
+      if (!(typeof value == expectedType)) {
         throw new CommandError(
           `Value passed to flag ${dasherizeOption(
             flag
